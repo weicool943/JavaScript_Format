@@ -1,0 +1,29 @@
+name: Format JavaScript Code
+
+on: [push]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Prettier
+      run: npm install --global prettier
+
+    - name: Format JavaScript files
+      run: prettier --write "**/*.js"
+
+    - name: Upload formatted code as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: formatted-code
+        path: |
+          **/*.js
